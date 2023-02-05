@@ -8,6 +8,11 @@ class TodoForm(Static):
 
 
 class TodoList(ListView):
+    BINDINGS = [
+        ("k", "cursor_up", "Up"),
+        ("j", "cursor_down", "Down"),
+    ]
+
     def __init__(self, todos: list[str] = []) -> None:
         super().__init__()
         self._todos: list[str] = todos
