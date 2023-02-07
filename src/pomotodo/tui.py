@@ -23,7 +23,11 @@ class TodoList(ListView):
 
 
 class PomotodoApp(App):
-    BINDINGS = [("q", "quit", "Quit")]
+    BINDINGS = [
+        ("q", "quit", "Quit"),
+        ("i", "focus_input", "Add Todo"),
+        ("t", "focus_todo_list", "Todo List"),
+    ]
 
     def compose(self) -> ComposeResult:
         yield TodoForm()
@@ -32,6 +36,12 @@ class PomotodoApp(App):
 
     def on_mount(self) -> None:
         self.query_one(Input).focus()
+
+    def action_focus_input(self) -> None:
+        self.query_one(Input).focus()
+
+    def action_focus_todo_list(self) -> None:
+        self.query_one(TodoList).focus()
 
     def on_input_submitted(self, event: Input.Submitted) -> None:
         self.query_one(TodoList).append(ListItem(Label(event.value)))
