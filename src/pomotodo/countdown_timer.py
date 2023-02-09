@@ -4,8 +4,16 @@ from textual.widgets import Button
 
 
 class CountdownTimer(Button):
-    seconds_remaining = reactive(5)
-    BINDINGS = [Binding("space", "start", "Start Timer", key_display="SPACE")]
+    seconds_remaining = reactive(60 * 20)
+    active = False
+    BINDINGS = [
+        Binding(
+            "space",
+            "start_or_pause",
+            "Start/Pause Timer",
+            key_display="SPACE",
+        )
+    ]
 
     def on_mount(self) -> None:
         self.update_timer = self.set_interval(
@@ -22,5 +30,10 @@ class CountdownTimer(Button):
         minutes, seconds = divmod(seconds_remaining, 60)
         self.label = f"{minutes:02}:{seconds:02}"
 
-    def action_start(self) -> None:
-        self.update_timer.resume()
+    def action_start_or_pause(self) -> None:
+        if self.active:
+            self.update_timer.pause()
+            self.active = False
+        else:
+            self.update_timer.resume()
+            self.active = True
