@@ -2,11 +2,12 @@ from textual.app import App, ComposeResult
 from textual.widgets import Footer, Input, Label, ListItem
 
 from pomotodo.countdown_timer import CountdownTimer
-from pomotodo.todo_form import TodoForm
 from pomotodo.todo_list import TodoList
+from pomotodo.todo_sidebar import TodoSidebar
 
 
 class PomotodoApp(App):
+    CSS_PATH = "pomotodo.css"
     BINDINGS = [
         ("q", "quit", "Quit"),
         ("i", "focus_input", "Add Todo"),
@@ -14,9 +15,8 @@ class PomotodoApp(App):
     ]
 
     def compose(self) -> ComposeResult:
+        yield TodoSidebar()
         yield CountdownTimer()
-        yield TodoForm()
-        yield TodoList()
         yield Footer()
 
     def on_mount(self) -> None:
