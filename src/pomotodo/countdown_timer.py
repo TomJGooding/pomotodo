@@ -2,6 +2,10 @@ from textual.binding import Binding
 from textual.reactive import reactive
 from textual.widgets import Button
 
+WORK_SECONDS: int = 25 * 60
+SHORT_BREAK_SECONDS: int = 5 * 60
+LONG_BREAK_SECONDS: int = 15 * 60
+
 ASCII_NUMBERS: dict[str, str] = {
     "0": "██████\n██  ██\n██  ██\n██  ██\n██████",
     "1": "    ██\n    ██\n    ██\n    ██\n    ██",
@@ -18,7 +22,7 @@ ASCII_NUMBERS: dict[str, str] = {
 
 
 class CountdownTimer(Button):
-    seconds_remaining = reactive(60 * 20)
+    seconds_remaining = reactive(WORK_SECONDS)
     active = False
     BINDINGS = [
         Binding(
@@ -26,7 +30,8 @@ class CountdownTimer(Button):
             "start_or_pause",
             "Start/Pause Timer",
             key_display="SPACE",
-        )
+        ),
+        ("r", "reset", "Reset Timer"),
     ]
 
     def on_mount(self) -> None:
@@ -59,3 +64,10 @@ class CountdownTimer(Button):
         else:
             self.update_timer.resume()
             self.active = True
+
+    def action_reset(self) -> None:
+        if self.active:
+            self.update_timer.pause()
+            self.active = False
+
+        self.seconds_remaining = WORK_SECONDS
