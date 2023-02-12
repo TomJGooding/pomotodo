@@ -2,6 +2,20 @@ from textual.binding import Binding
 from textual.reactive import reactive
 from textual.widgets import Button
 
+ASCII_NUMBERS: dict[str, str] = {
+    "0": "██████\n██  ██\n██  ██\n██  ██\n██████",
+    "1": "    ██\n    ██\n    ██\n    ██\n    ██",
+    "2": "██████\n    ██\n██████\n██    \n██████",
+    "3": "██████\n    ██\n █████\n    ██\n██████",
+    "4": "██  ██\n██  ██\n██████\n    ██\n    ██",
+    "5": "██████\n██    \n██████\n    ██\n██████",
+    "6": "██████\n██    \n██████\n██  ██\n██████",
+    "7": "██████\n    ██\n    ██\n    ██\n    ██",
+    "8": "██████\n██  ██\n██████\n██  ██\n██████",
+    "9": "██████\n██  ██\n██████\n    ██\n██████",
+    ":": "  \n██\n  \n██\n  ",
+}
+
 
 class CountdownTimer(Button):
     seconds_remaining = reactive(60 * 20)
@@ -28,7 +42,15 @@ class CountdownTimer(Button):
 
     def watch_seconds_remaining(self, seconds_remaining: int) -> None:
         minutes, seconds = divmod(seconds_remaining, 60)
-        self.label = f"{minutes:02}:{seconds:02}"
+        time_string: str = f"{minutes:02}:{seconds:02}"
+
+        time_display: list[str] = [""] * 5
+        for char in time_string:
+            ascii_lines: list[str] = ASCII_NUMBERS[char].splitlines()
+            for idx, line in enumerate(ascii_lines):
+                time_display[idx] += line + " "
+
+        self.label = "\n ".join(time_display)
 
     def action_start_or_pause(self) -> None:
         if self.active:
