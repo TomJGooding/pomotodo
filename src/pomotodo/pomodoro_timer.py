@@ -1,10 +1,8 @@
+from enum import Enum
+
 from textual.binding import Binding
 from textual.reactive import reactive
 from textual.widgets import Button
-
-WORK_SECONDS: int = 25 * 60
-SHORT_BREAK_SECONDS: int = 5 * 60
-LONG_BREAK_SECONDS: int = 15 * 60
 
 ASCII_NUMBERS: dict[str, str] = {
     "0": "██████\n██  ██\n██  ██\n██  ██\n██████",
@@ -21,8 +19,15 @@ ASCII_NUMBERS: dict[str, str] = {
 }
 
 
-class CountdownTimer(Button):
-    seconds_remaining = reactive(WORK_SECONDS)
+class TimerSession(Enum):
+    POMODORO = 25 * 60
+    SHORT_BREAK = 5 * 60
+    LONG_BREAK = 15 * 60
+
+
+class PomodoroTimer(Button):
+    session = TimerSession.POMODORO
+    seconds_remaining = reactive(session.value)
     active = False
     BINDINGS = [
         Binding(
@@ -44,6 +49,12 @@ class CountdownTimer(Button):
             self.seconds_remaining -= 1
         else:
             self.app.bell()
+            if self.session is TimerSession.POMODORO:
+                self.session = TimerSession.SHORT_BREAK
+                self.seconds_remaining = self.session.value
+            elif self.session is TimerSession.SHORT_BREAK:
+                self.session = TimerSession.POMODORO
+                self.seconds_remaining = self.session.value
 
     def watch_seconds_remaining(self, seconds_remaining: int) -> None:
         minutes, seconds = divmod(seconds_remaining, 60)
@@ -70,4 +81,4 @@ class CountdownTimer(Button):
             self.update_timer.pause()
             self.active = False
 
-        self.seconds_remaining = WORK_SECONDS
+        self.seconds_remaining = self.session.value

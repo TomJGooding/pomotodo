@@ -1,7 +1,7 @@
 from textual.app import App, ComposeResult
 from textual.widgets import Footer, Input, Label, ListItem
 
-from pomotodo.countdown_timer import CountdownTimer
+from pomotodo.pomodoro_timer import PomodoroTimer
 from pomotodo.todo_list import TodoList
 from pomotodo.todo_sidebar import TodoSidebar
 
@@ -16,11 +16,11 @@ class PomotodoApp(App):
 
     def compose(self) -> ComposeResult:
         yield TodoSidebar()
-        yield CountdownTimer()
+        yield PomodoroTimer()
         yield Footer()
 
     def on_mount(self) -> None:
-        self.query_one(CountdownTimer).focus()
+        self.query_one(PomodoroTimer).focus()
 
     def action_focus_input(self) -> None:
         self.query_one(Input).focus()
