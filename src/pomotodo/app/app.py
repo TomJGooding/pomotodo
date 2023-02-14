@@ -1,9 +1,10 @@
 from textual.app import App, ComposeResult
+from textual.containers import Container
 from textual.widgets import Footer, Input, Label, ListItem
 
-from pomotodo.pomodoro_timer import PomodoroTimer
-from pomotodo.todo_list import TodoList
-from pomotodo.todo_sidebar import TodoSidebar
+from pomotodo.app.pomodoro_timer import PomodoroTimer
+from pomotodo.app.todo_input import TodoInput
+from pomotodo.app.todo_list import TodoList
 
 
 class PomotodoApp(App):
@@ -15,7 +16,11 @@ class PomotodoApp(App):
     ]
 
     def compose(self) -> ComposeResult:
-        yield TodoSidebar()
+        yield Container(
+            TodoInput(),
+            TodoList(),
+            id="sidebar",
+        )
         yield PomodoroTimer()
         yield Footer()
 
