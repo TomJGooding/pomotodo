@@ -1,6 +1,6 @@
 import pytest
 
-from pomotodo.todo_list.todo_list_repository import TodoListMemRepo
+from pomotodo.todo_list.todo_list_repository import FakeRepository
 from pomotodo.todo_list.todo_model import Todo
 
 
@@ -26,7 +26,7 @@ def todo_dicts():
 
 
 def test_repository_list_without_parameters(todo_dicts):
-    repo = TodoListMemRepo(todo_dicts)
+    repo = FakeRepository(todo_dicts)
 
     todos = [Todo.from_dict(i) for i in todo_dicts]
 
