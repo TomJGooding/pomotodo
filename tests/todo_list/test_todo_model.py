@@ -1,6 +1,6 @@
 import uuid
 
-from pomotodo.todo_model import Todo
+from pomotodo.todo_list.todo_model import Todo
 
 
 def test_todo_model_init():

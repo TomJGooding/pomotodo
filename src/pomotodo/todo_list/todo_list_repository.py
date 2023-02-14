@@ -1,4 +1,4 @@
-from pomotodo.todo_model import Todo
+from pomotodo.todo_list.todo_model import Todo
 
 
 class TodoListMemRepo:
