@@ -3,8 +3,8 @@ from unittest import mock
 
 import pytest
 
-from pomotodo.todo_list_use_case import todo_list_use_case
-from pomotodo.todo_model import Todo
+from pomotodo.todo_list.todo_list_use_case import todo_list_use_case
+from pomotodo.todo_list.todo_model import Todo
 
 
 @pytest.fixture
