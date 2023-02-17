@@ -13,6 +13,10 @@ class AbstractRepository(ABC):
     def get(self, id: uuid.UUID) -> Todo:
         raise NotImplementedError
 
+    @abstractmethod
+    def list(self) -> list[Todo]:
+        raise NotImplementedError
+
 
 class FakeRepository(AbstractRepository):
     def __init__(self, data: list[dict]) -> None:
