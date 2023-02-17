@@ -28,4 +28,5 @@ def test_add_todo():
         uow=uow,
     )
 
+    assert uow.todos.get(id=id) is not None
     assert uow.committed
