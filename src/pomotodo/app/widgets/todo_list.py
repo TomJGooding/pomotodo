@@ -22,8 +22,8 @@ class TodoList(ListView):
         self.load_todos()
 
     def load_todos(self) -> None:
-        self.todos = services.get_all_todos(uow=self.uow)
-        for todo in self.todos:
+        todos = services.get_all_todos(uow=self.uow)
+        for todo in todos:
             self.append(ListItem(Label(todo.description)))
 
     def add_todo(self, description: str) -> None:
