@@ -1,8 +1,9 @@
 import uuid
 
 from textual.reactive import reactive
-from textual.widgets import Label, ListItem, ListView
+from textual.widgets import Label, ListView
 
+from pomotodo.app.widgets.todo_item import TodoItem
 from pomotodo.todo_list import services
 from pomotodo.todo_list.model import Todo
 from pomotodo.todo_list.unit_of_work import AbstractUnitOfWork
@@ -24,7 +25,7 @@ class TodoList(ListView):
     def load_todos(self) -> None:
         todos = services.get_all_todos(uow=self.uow)
         for todo in todos:
-            self.append(ListItem(Label(todo.description)))
+            self.append(TodoItem(todo.id, Label(todo.description)))
 
     def add_todo(self, description: str) -> None:
         services.add_todo(
