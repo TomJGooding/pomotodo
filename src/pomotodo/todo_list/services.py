@@ -9,7 +9,11 @@ def add_todo(
     description: str,
     complete: bool,
     uow: AbstractUnitOfWork,
-):
+) -> None:
     with uow:
         uow.todos.add(Todo(id, description, complete))
         uow.commit()
+
+
+def get_all_todos(uow: AbstractUnitOfWork) -> list[Todo]:
+    return uow.todos.list()
