@@ -2,9 +2,9 @@ from textual.app import App, ComposeResult
 from textual.containers import Container
 from textual.widgets import Footer, Input
 
-from pomotodo.app.pomodoro_timer import PomodoroTimer
-from pomotodo.app.todo_input import TodoInput
-from pomotodo.app.todo_list import TodoList
+from pomotodo.app.widgets.pomodoro_timer import PomodoroTimer
+from pomotodo.app.widgets.todo_input import TodoInput
+from pomotodo.app.widgets.todo_list import TodoList
 from pomotodo.todo_list.unit_of_work import FakeUnitOfWork
 
 
