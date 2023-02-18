@@ -1,8 +1,8 @@
 import json
 import uuid
 
-from pomotodo.todo_list.todo_model import Todo
-from pomotodo.todo_list.todo_serialiser import TodoJsonEncoder
+from pomotodo.todo_list.model import Todo
+from pomotodo.todo_list.serialiser import TodoJsonEncoder
 
 
 def test_serialise_todo():

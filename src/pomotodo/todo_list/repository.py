@@ -1,7 +1,7 @@
 import uuid
 from abc import ABC, abstractmethod
 
-from pomotodo.todo_list.todo_model import Todo
+from pomotodo.todo_list.model import Todo
 
 
 class AbstractRepository(ABC):
