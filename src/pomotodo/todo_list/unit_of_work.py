@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from abc import ABC, abstractmethod
 
-from pomotodo.todo_list.todo_list_repository import AbstractRepository
+from pomotodo.todo_list.repository import AbstractRepository
 
 
 class AbstractUnitOfWork(ABC):

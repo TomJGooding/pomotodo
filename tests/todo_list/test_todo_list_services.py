@@ -1,8 +1,8 @@
 import uuid
 
-from pomotodo.todo_list.todo_list_repository import FakeRepository
-from pomotodo.todo_list.todo_list_services import add_todo
-from pomotodo.todo_list.todo_model import Todo
+from pomotodo.todo_list.model import Todo
+from pomotodo.todo_list.repository import FakeRepository
+from pomotodo.todo_list.services import add_todo
 from pomotodo.todo_list.unit_of_work import AbstractUnitOfWork
 
 todo_dicts = [

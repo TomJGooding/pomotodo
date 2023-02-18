@@ -1,6 +1,6 @@
 import uuid
 
-from pomotodo.todo_list import todo_model
+from pomotodo.todo_list.model import Todo
 from pomotodo.todo_list.unit_of_work import AbstractUnitOfWork
 
 
@@ -11,5 +11,5 @@ def add_todo(
     uow: AbstractUnitOfWork,
 ):
     with uow:
-        uow.todos.add(todo_model.Todo(id, description, complete))
+        uow.todos.add(Todo(id, description, complete))
         uow.commit()
