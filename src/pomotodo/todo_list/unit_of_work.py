@@ -27,7 +27,7 @@ todo_dicts = [
     {
         "id": "5222f664-71e6-4481-ad38-a7dd37d3636e",
         "description": "Add your todos for today",
-        "complete": False,
+        "complete": True,
     },
     {
         "id": "65efd605-5d2b-4888-be71-79c63c275873",
