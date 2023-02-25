@@ -5,7 +5,6 @@ from textual.widgets import ListView
 
 from pomotodo.app.widgets.todo_item import TodoItem
 from pomotodo.todo_list import services
-from pomotodo.todo_list.model import Todo
 from pomotodo.todo_list.unit_of_work import AbstractUnitOfWork
 
 
@@ -13,9 +12,8 @@ class TodoList(ListView):
     BINDINGS = [
         ("k", "cursor_up", "Up"),
         ("j", "cursor_down", "Down"),
+        ("x", "mark_complete", "Mark complete"),
     ]
-
-    todos: reactive[list[Todo]] = reactive([])
 
     def __init__(self, uow: AbstractUnitOfWork) -> None:
         super().__init__()
@@ -36,3 +34,15 @@ class TodoList(ListView):
         )
         self.clear()
         self.load_todos()
+
+    def action_mark_complete(self) -> None:
+        highlighted_todo: TodoItem | None = self.highlighted_child
+        highlighted_index = self.index
+        if not highlighted_todo:
+            return
+
+        todo_id: uuid.UUID = highlighted_todo.todo.id
+        services.change_todo_status(todo_id, self.uow)
+        self.clear()
+        self.load_todos()
+        self.index = highlighted_index

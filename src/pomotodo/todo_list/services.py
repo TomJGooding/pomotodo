@@ -16,4 +16,13 @@ def add_todo(
 
 
 def get_all_todos(uow: AbstractUnitOfWork) -> list[Todo]:
-    return uow.todos.list()
+    with uow:
+        todos = uow.todos.list()
+    return todos
+
+
+def change_todo_status(id: uuid.UUID, uow: AbstractUnitOfWork) -> None:
+    with uow:
+        todo: Todo = uow.todos.get(id)
+        todo.complete = not todo.complete
+        uow.commit()

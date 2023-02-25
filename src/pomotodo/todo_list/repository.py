@@ -19,14 +19,14 @@ class AbstractRepository(ABC):
 
 
 class FakeRepository(AbstractRepository):
-    def __init__(self, data: list[dict]) -> None:
-        self.data: list[dict] = data
+    def __init__(self, todos: list[Todo]) -> None:
+        self._todos = todos
 
-    def add(self, todo) -> None:
-        self.data.append(todo.to_dict())
+    def add(self, todo: Todo) -> None:
+        self._todos.append(todo)
 
     def get(self, id: uuid.UUID) -> Todo:
-        return next(todo for todo in self.list() if todo.id == id)
+        return next(todo for todo in self._todos if todo.id == id)
 
     def list(self) -> list[Todo]:
-        return [Todo.from_dict(i) for i in self.data]
+        return self._todos

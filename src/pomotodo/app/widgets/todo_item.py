@@ -14,4 +14,5 @@ class TodoItem(ListItem):
             todo_label = f"\[x] [strike]{self.todo.description}[/strike]"
         else:
             todo_label = f"\[ ] {self.todo.description}"
+
         yield (Label(todo_label))

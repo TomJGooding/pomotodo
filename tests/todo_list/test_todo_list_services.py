@@ -26,7 +26,7 @@ todo_dicts = [
 
 class FakeUnitOfWork(AbstractUnitOfWork):
     def __init__(self):
-        self.todos = FakeRepository(todo_dicts)
+        self.todos = FakeRepository([Todo.from_dict(todo) for todo in todo_dicts])
         self.committed = False
 
     def commit(self):
