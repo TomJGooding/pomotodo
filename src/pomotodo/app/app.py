@@ -1,6 +1,6 @@
 from textual.app import App, ComposeResult
 from textual.containers import Container
-from textual.widgets import Footer, Input
+from textual.widgets import Footer
 
 from pomotodo.app.widgets.pomodoro_timer import PomodoroTimer
 from pomotodo.app.widgets.todo_input import TodoInput
@@ -26,10 +26,10 @@ class PomotodoApp(App):
     def on_mount(self) -> None:
         self.query_one(PomodoroTimer).focus()
 
-    def on_input_submitted(self, event: Input.Submitted) -> None:
+    def on_input_submitted(self, event: TodoInput.Submitted) -> None:
         todo_description: str = event.input.value.strip()
         self.query_one(TodoList).add_todo(description=todo_description)
-        self.query_one(Input).value = ""
+        self.query_one(TodoInput).value = ""
 
 
 if __name__ == "__main__":
