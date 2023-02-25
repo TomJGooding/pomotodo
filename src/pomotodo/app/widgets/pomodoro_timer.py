@@ -37,6 +37,7 @@ class PomodoroTimer(Button):
             key_display="SPACE",
         ),
         ("r", "reset", "Reset Timer"),
+        ("t", "focus_todo_list", "Todo List"),
     ]
 
     def on_mount(self) -> None:
@@ -82,3 +83,6 @@ class PomodoroTimer(Button):
             self.active = False
 
         self.seconds_remaining = self.session.value
+
+    def action_focus_todo_list(self):
+        self.app.query_one("TodoList").focus()

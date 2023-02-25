@@ -1,6 +1,5 @@
 import uuid
 
-from textual.reactive import reactive
 from textual.widgets import ListView
 
 from pomotodo.app.widgets.todo_item import TodoItem
@@ -10,9 +9,11 @@ from pomotodo.todo_list.unit_of_work import AbstractUnitOfWork
 
 class TodoList(ListView):
     BINDINGS = [
+        ("i", "focus_todo_input", "Add Todo"),
         ("k", "cursor_up", "Up"),
         ("j", "cursor_down", "Down"),
         ("x", "mark_complete", "Mark complete"),
+        ("t", "focus_pomodoro_timer", "Timer"),
     ]
 
     def __init__(self, uow: AbstractUnitOfWork) -> None:
@@ -46,3 +47,9 @@ class TodoList(ListView):
         self.clear()
         self.load_todos()
         self.index = highlighted_index
+
+    def action_focus_pomodoro_timer(self) -> None:
+        self.app.query_one("PomodoroTimer").focus()
+
+    def action_focus_todo_input(self) -> None:
+        self.app.query_one("TodoInput").focus()

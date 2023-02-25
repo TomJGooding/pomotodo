@@ -9,4 +9,4 @@ class TodoInput(Input):
 
     def action_cancel(self) -> None:
         self.value = ""
-        self.reset_focus()
+        self.app.query_one("TodoList").focus()
