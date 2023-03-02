@@ -19,14 +19,14 @@ ASCII_NUMBERS: dict[str, str] = {
 }
 
 
-class TimerSession(Enum):
+class TimerMode(Enum):
     POMODORO = 25 * 60
     SHORT_BREAK = 5 * 60
     LONG_BREAK = 15 * 60
 
 
 class PomodoroTimer(Button):
-    session = TimerSession.POMODORO
+    session = TimerMode.POMODORO
     seconds_remaining = reactive(session.value)
     active = False
     BINDINGS = [
@@ -50,11 +50,14 @@ class PomodoroTimer(Button):
             self.seconds_remaining -= 1
         else:
             self.app.bell()
-            if self.session is TimerSession.POMODORO:
-                self.session = TimerSession.SHORT_BREAK
+            message = self.app.query_one("PomodoroMessage")
+            if self.session is TimerMode.POMODORO:
+                self.session = TimerMode.SHORT_BREAK
+                message.update("Time for a break!")
                 self.seconds_remaining = self.session.value
-            elif self.session is TimerSession.SHORT_BREAK:
-                self.session = TimerSession.POMODORO
+            elif self.session is TimerMode.SHORT_BREAK:
+                self.session = TimerMode.POMODORO
+                message.update("Time to focus!")
                 self.seconds_remaining = self.session.value
 
     def watch_seconds_remaining(self, seconds_remaining: int) -> None:

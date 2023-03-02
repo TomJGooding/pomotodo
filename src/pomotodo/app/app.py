@@ -1,7 +1,8 @@
 from textual.app import App, ComposeResult
-from textual.containers import Container
-from textual.widgets import Footer
+from textual.containers import Container, Horizontal
+from textual.widgets import Footer, Label
 
+from pomotodo.app.widgets.pomodoro_message import PomodoroMessage
 from pomotodo.app.widgets.pomodoro_timer import PomodoroTimer
 from pomotodo.app.widgets.todo_input import TodoInput
 from pomotodo.app.widgets.todo_list import TodoList
@@ -15,12 +16,13 @@ class PomotodoApp(App):
     ]
 
     def compose(self) -> ComposeResult:
-        yield Container(
-            TodoInput(),
-            TodoList(uow=FakeUnitOfWork()),
-            id="sidebar",
-        )
-        yield PomodoroTimer()
+        with Container(classes="sidebar"):
+            yield TodoInput()
+            yield TodoList(uow=FakeUnitOfWork())
+        with Horizontal(classes="items-center"):
+            yield PomodoroTimer()
+        with Horizontal(classes="items-center"):
+            yield (PomodoroMessage("Time to focus!", id="message"))
         yield Footer()
 
     def on_mount(self) -> None:
