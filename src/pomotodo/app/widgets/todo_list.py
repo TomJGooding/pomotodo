@@ -22,9 +22,12 @@ class TodoList(ListView):
         self.load_todos()
 
     def load_todos(self) -> None:
+        highlighted_index = self.index
+        self.clear()
         todos = services.get_all_todos(uow=self.uow)
         for todo in todos:
             self.append(TodoItem(todo))
+        self.index = highlighted_index
 
     def add_todo(self, description: str) -> None:
         services.add_todo(
@@ -33,20 +36,16 @@ class TodoList(ListView):
             complete=False,
             uow=self.uow,
         )
-        self.clear()
         self.load_todos()
 
     def action_mark_complete(self) -> None:
         highlighted_todo: TodoItem | None = self.highlighted_child
-        highlighted_index = self.index
         if not highlighted_todo:
             return
 
         todo_id: uuid.UUID = highlighted_todo.todo.id
         services.change_todo_status(todo_id, self.uow)
-        self.clear()
         self.load_todos()
-        self.index = highlighted_index
 
     def action_focus_pomodoro_timer(self) -> None:
         self.app.query_one("PomodoroTimer").focus()
