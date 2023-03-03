@@ -88,4 +88,4 @@ class PomodoroTimer(Button):
         self.seconds_remaining = self.session.value
 
     def action_focus_todo_list(self):
-        self.app.query_one("TodoList").focus()
+        self.app.query_one("TodoListView").focus()

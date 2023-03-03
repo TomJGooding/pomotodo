@@ -7,7 +7,7 @@ from pomotodo.todo_list import services
 from pomotodo.todo_list.unit_of_work import AbstractUnitOfWork
 
 
-class TodoList(ListView):
+class TodoListView(ListView):
     BINDINGS = [
         ("i", "focus_todo_input", "Add Todo"),
         ("k", "cursor_up", "Up"),
