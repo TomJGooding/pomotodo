@@ -10,9 +10,9 @@ class PomodoroMode(Enum):
 
 @dataclass
 class PomodoroDurations:
-    work: int = 25
-    short_break: int = 5
-    long_break: int = 15
+    work: int = 25 * 60
+    short_break: int = 5 * 60
+    long_break: int = 15 * 60
 
 
 class Pomodoro:
