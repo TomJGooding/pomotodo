@@ -1,8 +1,8 @@
-from enum import Enum
-
 from textual.binding import Binding
 from textual.reactive import reactive
-from textual.widgets import Button
+from textual.widgets import Button, Label
+
+from pomotodo.pomodoro.model import Pomodoro, PomodoroMode
 
 ASCII_NUMBERS: dict[str, str] = {
     "0": "██████\n██  ██\n██  ██\n██  ██\n██████",
@@ -19,15 +19,9 @@ ASCII_NUMBERS: dict[str, str] = {
 }
 
 
-class TimerMode(Enum):
-    POMODORO = 25 * 60
-    SHORT_BREAK = 5 * 60
-    LONG_BREAK = 15 * 60
-
-
 class PomodoroTimer(Button):
-    session = TimerMode.POMODORO
-    seconds_remaining = reactive(session.value)
+    pomodoro = Pomodoro()
+    seconds_remaining = reactive(pomodoro.timer_seconds)
     active = False
     BINDINGS = [
         Binding(
@@ -50,15 +44,15 @@ class PomodoroTimer(Button):
             self.seconds_remaining -= 1
         else:
             self.app.bell()
+            self.pomodoro.next_mode()
+            self.seconds_remaining = self.pomodoro.timer_seconds
+
             message = self.app.query_one("PomodoroMessage")
-            if self.session is TimerMode.POMODORO:
-                self.session = TimerMode.SHORT_BREAK
-                message.update("Time for a break!")
-                self.seconds_remaining = self.session.value
-            elif self.session is TimerMode.SHORT_BREAK:
-                self.session = TimerMode.POMODORO
-                message.update("Time to focus!")
-                self.seconds_remaining = self.session.value
+            match self.pomodoro.mode:
+                case PomodoroMode.WORK:
+                    message.update("Time to focus!")
+                case PomodoroMode.SHORT_BREAK | PomodoroMode.LONG_BREAK:
+                    message.update("Time for a break!")
 
     def watch_seconds_remaining(self, seconds_remaining: int) -> None:
         minutes, seconds = divmod(seconds_remaining, 60)
@@ -85,7 +79,7 @@ class PomodoroTimer(Button):
             self.update_timer.pause()
             self.active = False
 
-        self.seconds_remaining = self.session.value
+        self.seconds_remaining = self.pomodoro.timer_seconds
 
     def action_focus_todo_list(self):
         self.app.query_one("TodoListView").focus()
