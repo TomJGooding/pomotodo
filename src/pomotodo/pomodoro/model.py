@@ -9,7 +9,7 @@ class PomodoroMode(Enum):
 
 
 @dataclass
-class PomodoroDurations:
+class PomodoroDurationSettings:
     work: int = 25 * 60
     short_break: int = 5 * 60
     long_break: int = 15 * 60
@@ -19,20 +19,20 @@ class Pomodoro:
     def __init__(
         self,
         mode: PomodoroMode = PomodoroMode.WORK,
-        durations: PomodoroDurations = PomodoroDurations(),
+        duration_settings: PomodoroDurationSettings = PomodoroDurationSettings(),
     ) -> None:
         self.mode: PomodoroMode = mode
-        self.durations: PomodoroDurations = durations
+        self.duration_settings: PomodoroDurationSettings = duration_settings
 
     @property
-    def timer_seconds(self) -> int:
+    def mode_duration(self) -> int:
         match self.mode:
             case PomodoroMode.WORK:
-                return self.durations.work
+                return self.duration_settings.work
             case PomodoroMode.SHORT_BREAK:
-                return self.durations.short_break
+                return self.duration_settings.short_break
             case PomodoroMode.LONG_BREAK:
-                return self.durations.long_break
+                return self.duration_settings.long_break
 
     def next_mode(self) -> None:
         match self.mode:

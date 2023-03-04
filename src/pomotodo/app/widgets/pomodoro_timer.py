@@ -1,6 +1,6 @@
 from textual.binding import Binding
 from textual.reactive import reactive
-from textual.widgets import Button, Label
+from textual.widgets import Button
 
 from pomotodo.pomodoro.model import Pomodoro, PomodoroMode
 
@@ -21,7 +21,7 @@ ASCII_NUMBERS: dict[str, str] = {
 
 class PomodoroTimer(Button):
     pomodoro = Pomodoro()
-    seconds_remaining = reactive(pomodoro.timer_seconds)
+    seconds_remaining = reactive(pomodoro.mode_duration)
     active = False
     BINDINGS = [
         Binding(
@@ -45,7 +45,7 @@ class PomodoroTimer(Button):
         else:
             self.app.bell()
             self.pomodoro.next_mode()
-            self.seconds_remaining = self.pomodoro.timer_seconds
+            self.seconds_remaining = self.pomodoro.mode_duration
 
             message = self.app.query_one("PomodoroMessage")
             match self.pomodoro.mode:
@@ -79,7 +79,7 @@ class PomodoroTimer(Button):
             self.update_timer.pause()
             self.active = False
 
-        self.seconds_remaining = self.pomodoro.timer_seconds
+        self.seconds_remaining = self.pomodoro.mode_duration
 
     def action_focus_todo_list(self):
         self.app.query_one("TodoListView").focus()
