@@ -18,9 +18,11 @@ class PomodoroDurationSettings:
 class Pomodoro:
     def __init__(
         self,
+        work_sessions_count: int = 0,
         mode: PomodoroMode = PomodoroMode.WORK,
         duration_settings: PomodoroDurationSettings = PomodoroDurationSettings(),
     ) -> None:
+        self.work_sessions_count: int = work_sessions_count
         self.mode: PomodoroMode = mode
         self.duration_settings: PomodoroDurationSettings = duration_settings
 
@@ -37,8 +39,10 @@ class Pomodoro:
     def next_mode(self) -> None:
         match self.mode:
             case PomodoroMode.WORK:
-                self.mode = PomodoroMode.SHORT_BREAK
-            case PomodoroMode.SHORT_BREAK:
+                self.work_sessions_count += 1
+                if self.work_sessions_count % 4 == 0 and self.work_sessions_count != 0:
+                    self.mode = PomodoroMode.LONG_BREAK
+                else:
+                    self.mode = PomodoroMode.SHORT_BREAK
+            case PomodoroMode.SHORT_BREAK | PomodoroMode.LONG_BREAK:
                 self.mode = PomodoroMode.WORK
-            case PomodoroMode.LONG_BREAK:
-                raise NotImplementedError

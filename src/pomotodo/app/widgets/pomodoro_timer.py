@@ -1,6 +1,6 @@
 from textual.binding import Binding
 from textual.reactive import reactive
-from textual.widgets import Button
+from textual.widgets import Button, Label
 
 from pomotodo.pomodoro.model import Pomodoro, PomodoroMode
 
@@ -47,12 +47,14 @@ class PomodoroTimer(Button):
             self.pomodoro.next_mode()
             self.seconds_remaining = self.pomodoro.mode_duration
 
-            message = self.app.query_one("PomodoroMessage")
+            message: Label = self.app.query_one("PomodoroMessage")  # type: ignore
             match self.pomodoro.mode:
                 case PomodoroMode.WORK:
                     message.update("Time to focus!")
-                case PomodoroMode.SHORT_BREAK | PomodoroMode.LONG_BREAK:
-                    message.update("Time for a break!")
+                case PomodoroMode.SHORT_BREAK:
+                    message.update("Time for a short break!")
+                case PomodoroMode.LONG_BREAK:
+                    message.update("Time for a longer break!")
 
     def watch_seconds_remaining(self, seconds_remaining: int) -> None:
         minutes, seconds = divmod(seconds_remaining, 60)
