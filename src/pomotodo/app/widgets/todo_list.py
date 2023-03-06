@@ -39,7 +39,9 @@ class TodoListView(ListView):
         self.load_todos()
 
     def action_mark_complete(self) -> None:
-        highlighted_todo: TodoItem | None = self.highlighted_child
+        highlighted_todo: TodoItem | None = (
+            self.highlighted_child  # type: ignore[assignment]
+        )
         if not highlighted_todo:
             return
 

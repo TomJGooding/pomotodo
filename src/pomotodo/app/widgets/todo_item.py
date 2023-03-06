@@ -1,3 +1,5 @@
+from typing import Any
+
 from textual.app import ComposeResult
 from textual.widgets import Label, ListItem
 
@@ -5,7 +7,7 @@ from pomotodo.todo_list.model import Todo
 
 
 class TodoItem(ListItem):
-    def __init__(self, todo: Todo, *args, **kwargs) -> None:
+    def __init__(self, todo: Todo, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
         self.todo: Todo = todo
 
