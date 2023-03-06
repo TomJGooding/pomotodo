@@ -1,7 +1,7 @@
 from pomotodo.pomodoro.model import Pomodoro, PomodoroMode
 
 
-def test_pomodoro_timer_property():
+def test_pomodoro_timer_property() -> None:
     work_pomodoro = Pomodoro(mode=PomodoroMode.WORK)
     short_break_pomodoro = Pomodoro(mode=PomodoroMode.SHORT_BREAK)
     long_break_pomodoro = Pomodoro(mode=PomodoroMode.LONG_BREAK)
@@ -11,7 +11,7 @@ def test_pomodoro_timer_property():
     assert long_break_pomodoro.mode_duration == 15 * 60
 
 
-def test_pomodoro_next_mode():
+def test_pomodoro_next_mode() -> None:
     pomodoro = Pomodoro(work_sessions_count=0, mode=PomodoroMode.WORK)
 
     pomodoro.next_mode()

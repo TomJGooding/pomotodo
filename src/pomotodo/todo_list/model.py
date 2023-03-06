@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import dataclasses
 import uuid
 
@@ -9,8 +11,8 @@ class Todo:
     complete: bool
 
     @classmethod
-    def from_dict(cls, d: dict):
+    def from_dict(cls, d: dict) -> Todo:
         return cls(**d)
 
-    def to_dict(self):
+    def to_dict(self) -> dict:
         return dataclasses.asdict(self)

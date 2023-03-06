@@ -5,7 +5,7 @@ from pomotodo.todo_list.model import Todo
 from pomotodo.todo_list.serialiser import TodoJsonEncoder
 
 
-def test_serialise_todo():
+def test_serialise_todo() -> None:
     id = uuid.uuid4()
 
     todo = Todo(

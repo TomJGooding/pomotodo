@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
+from typing import Any
 
 from pomotodo.todo_list.model import Todo
 from pomotodo.todo_list.repository import AbstractRepository, FakeRepository
@@ -12,15 +13,15 @@ class AbstractUnitOfWork(ABC):
     def __enter__(self) -> AbstractUnitOfWork:
         return self
 
-    def __exit__(self, *args):
+    def __exit__(self, *args: Any) -> None:
         self.rollback()
 
     @abstractmethod
-    def commit(self):
+    def commit(self) -> None:
         raise NotImplementedError
 
     @abstractmethod
-    def rollback(self):
+    def rollback(self) -> None:
         raise NotImplementedError
 
 
@@ -54,12 +55,12 @@ todo_dicts = [
 
 
 class FakeUnitOfWork(AbstractUnitOfWork):
-    def __init__(self):
+    def __init__(self) -> None:
         self.todos = FakeRepository([Todo.from_dict(todo) for todo in todo_dicts])
         self.committed = False
 
-    def commit(self):
+    def commit(self) -> None:
         self.committed = True
 
-    def rollback(self):
+    def rollback(self) -> None:
         pass

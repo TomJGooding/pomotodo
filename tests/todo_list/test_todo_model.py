@@ -3,7 +3,7 @@ import uuid
 from pomotodo.todo_list.model import Todo
 
 
-def test_todo_model_init():
+def test_todo_model_init() -> None:
     id = uuid.uuid4()
 
     todo = Todo(
@@ -17,7 +17,7 @@ def test_todo_model_init():
     assert todo.complete is False
 
 
-def test_todo_model_from_dict():
+def test_todo_model_from_dict() -> None:
     id = uuid.uuid4()
     init_dict = {
         "id": id,
@@ -32,7 +32,7 @@ def test_todo_model_from_dict():
     assert todo.complete is False
 
 
-def test_todo_model_to_dict():
+def test_todo_model_to_dict() -> None:
     id = uuid.uuid4()
     init_dict = {
         "id": id,
@@ -45,7 +45,7 @@ def test_todo_model_to_dict():
     assert todo.to_dict() == init_dict
 
 
-def test_todo_model_comparison():
+def test_todo_model_comparison() -> None:
     id = uuid.uuid4()
     init_dict = {
         "id": id,

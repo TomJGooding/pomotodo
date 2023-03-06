@@ -25,18 +25,18 @@ todo_dicts = [
 
 
 class FakeUnitOfWork(AbstractUnitOfWork):
-    def __init__(self):
+    def __init__(self) -> None:
         self.todos = FakeRepository([Todo.from_dict(todo) for todo in todo_dicts])
         self.committed = False
 
-    def commit(self):
+    def commit(self) -> None:
         self.committed = True
 
-    def rollback(self):
+    def rollback(self) -> None:
         pass
 
 
-def test_add_todo():
+def test_add_todo() -> None:
     uow = FakeUnitOfWork()
     id = uuid.uuid4()
 
@@ -51,7 +51,7 @@ def test_add_todo():
     assert uow.committed
 
 
-def test_get_all_todos():
+def test_get_all_todos() -> None:
     uow = FakeUnitOfWork()
 
     todos = [Todo.from_dict(i) for i in todo_dicts]
@@ -59,7 +59,7 @@ def test_get_all_todos():
     assert get_all_todos(uow) == todos
 
 
-def test_change_todo_status():
+def test_change_todo_status() -> None:
     uow = FakeUnitOfWork()
     id = uuid.uuid4()
 
