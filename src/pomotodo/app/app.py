@@ -26,6 +26,8 @@ class PomotodoApp(App):
         yield Footer()
 
     def on_mount(self) -> None:
+        todo_list = self.query_one(TodoListView)
+        todo_list.border_title = "Todo List"
         self.query_one(PomodoroTimer).focus()
 
     def on_input_submitted(self, event: TodoInput.Submitted) -> None:

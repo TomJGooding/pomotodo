@@ -12,6 +12,7 @@ PomodoroTimer {
   width: auto;
   height: auto;
   padding: 1 2;
+  border: tall $background;
   text-style: bold;
 }
 
@@ -23,4 +24,13 @@ PomodoroTimer:focus {
 PomodoroMessage {
   margin: 1 0;
   text-style: bold;
+}
+
+TodoListView {
+  height: 100%;
+  border: heavy $panel-lighten-1;
+}
+
+TodoListView:focus {
+  border: heavy $accent;
 }
