@@ -1,4 +1,3 @@
-from textual.binding import Binding
 from textual.reactive import reactive
 from textual.widgets import Button, Label
 
@@ -24,12 +23,7 @@ class PomodoroTimer(Button):
     seconds_remaining = reactive(pomodoro.mode_duration)
     active = False
     BINDINGS = [
-        Binding(
-            "space",
-            "start_or_pause",
-            "Start/Pause Timer",
-            key_display="SPACE",
-        ),
+        ("space", "start_or_pause", "Start/Pause Timer"),
         ("r", "reset", "Reset Timer"),
         ("t", "focus_todo_list", "Todo List"),
     ]
