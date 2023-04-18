@@ -1,5 +1,5 @@
 from textual.app import App, ComposeResult
-from textual.containers import Container, Horizontal
+from textual.containers import Horizontal, Vertical
 from textual.widgets import Footer
 
 from pomotodo.app.widgets.pomodoro_message import PomodoroMessage
@@ -16,7 +16,7 @@ class PomotodoApp(App):
     ]
 
     def compose(self) -> ComposeResult:
-        with Container(classes="sidebar"):
+        with Vertical(classes="sidebar"):
             yield TodoInput()
             yield TodoListView(uow=FakeUnitOfWork())
         with Horizontal(classes="items-center"):
