@@ -6,7 +6,7 @@ from pomotodo.app.widgets.pomodoro_message import PomodoroMessage
 from pomotodo.app.widgets.pomodoro_timer import PomodoroTimer
 from pomotodo.app.widgets.todo_input import TodoInput
 from pomotodo.app.widgets.todo_list import TodoListView
-from pomotodo.todo_list.unit_of_work import FakeUnitOfWork
+from pomotodo.todo_list.unit_of_work import MemoryUnitOfWork
 
 
 class PomotodoApp(App):
@@ -18,7 +18,7 @@ class PomotodoApp(App):
     def compose(self) -> ComposeResult:
         with Vertical(classes="sidebar"):
             yield TodoInput()
-            yield TodoListView(uow=FakeUnitOfWork())
+            yield TodoListView(uow=MemoryUnitOfWork())
         with Horizontal(classes="items-center"):
             yield PomodoroTimer()
         with Horizontal(classes="items-center"):

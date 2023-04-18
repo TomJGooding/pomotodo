@@ -1,7 +1,7 @@
 import uuid
 
 from pomotodo.todo_list.model import Todo
-from pomotodo.todo_list.repository import FakeRepository
+from pomotodo.todo_list.repository import MemoryRepository
 from pomotodo.todo_list.services import add_todo, change_todo_status, get_all_todos
 from pomotodo.todo_list.unit_of_work import AbstractUnitOfWork
 
@@ -26,7 +26,7 @@ todo_dicts = [
 
 class FakeUnitOfWork(AbstractUnitOfWork):
     def __init__(self) -> None:
-        self.todos = FakeRepository([Todo.from_dict(todo) for todo in todo_dicts])
+        self.todos = MemoryRepository([Todo.from_dict(todo) for todo in todo_dicts])
         self.committed = False
 
     def commit(self) -> None:
