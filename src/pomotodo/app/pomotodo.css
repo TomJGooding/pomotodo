@@ -8,15 +8,11 @@ Screen {
   height: 100%;
 }
 
-.items-center {
-  align: center middle;
-  height: auto;
-}
-
 PomodoroTimer {
   width: auto;
   height: auto;
   padding: 1 2;
+  text-style: bold;
 }
 
 PomodoroTimer:focus {

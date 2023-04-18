@@ -1,5 +1,5 @@
 from textual.app import App, ComposeResult
-from textual.containers import Horizontal, Vertical
+from textual.containers import Center, Vertical
 from textual.widgets import Footer
 
 from pomotodo.app.widgets.pomodoro_message import PomodoroMessage
@@ -19,9 +19,9 @@ class PomotodoApp(App):
         with Vertical(classes="sidebar"):
             yield TodoInput()
             yield TodoListView(uow=MemoryUnitOfWork())
-        with Horizontal(classes="items-center"):
+        with Center():
             yield PomodoroTimer()
-        with Horizontal(classes="items-center"):
+        with Center():
             yield (PomodoroMessage("Time to focus!", id="message"))
         yield Footer()
 
