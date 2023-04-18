@@ -18,8 +18,8 @@ class AbstractRepository(ABC):
         raise NotImplementedError
 
 
-class FakeRepository(AbstractRepository):
-    def __init__(self, todos: list[Todo]) -> None:
+class MemoryRepository(AbstractRepository):
+    def __init__(self, todos: list[Todo] = []) -> None:
         self._todos = todos
 
     def add(self, todo: Todo) -> None:
